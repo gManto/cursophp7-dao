@@ -127,7 +127,7 @@ Class Usuario{
 
   public function insert(){
       $sql = new Sql();
-      $results = $sql->select("call sp_usuarios_insert(:LOGIN, :PASSWORD)", array(
+      $results = $sql->select("CALL sp_usuarios_insert(:LOGIN, :PASSWORD)", array(
          ":LOGIN"=>$this->getDeslogin(),
          ":PASSWORD"=>$this->getDesenha()
       ));
@@ -145,11 +145,24 @@ Class Usuario{
 
       $sql = new Sql();
 
-      $sql->query("update tb_usuarios set deslogin = :LOGIN , dessenha = :PASSWORD where idusuario = :ID", array(
+      $sql->query("UPDATE tb_usuarios set deslogin = :LOGIN , dessenha = :PASSWORD where idusuario = :ID", array(
            ":LOGIN"=>$this->getDeslogin(),
            ":PASSWORD"=>$this->getDesenha(),
            ":ID"=>$this->getIdusuario()
         ));
+      }
+
+
+      public function delete(){
+          $sql = new Sql();
+          $results = $sql->query("DELETE FROM tb_usuarios where :ID", array(
+             ":ID"=>$this->getIdusuario()
+          ));
+
+          $this->setIdusuario(0);
+          $this->setDeslogin("");
+          $this->setDesenha("");
+          $this->setDtcadastro(new DateTime());
       }
 
 

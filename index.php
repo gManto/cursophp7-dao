@@ -26,15 +26,20 @@ echo $root;
 //echo $usuario;
 
 // inserir usuario
-//$aluno = new Usuario("Renata","@senha");
-//$aluno->insert();
+//$usuario = new Usuario("Renata","@senha");
+//$usuario->insert();
 
 
 //update
-$usuario = new Usuario();
+//$usuario = new Usuario();
 
-$usuario->loadById(5);
-$usuario->update("Gabriela","A123ddd@");
+//$usuario->loadById(5);
+///$usuario->update("Gabriela","A123ddd@");
+
+//DELETE
+$usuario = new Usuario();
+$usuario->loadById(3);
+$usuario->delete();
 echo $usuario;
 
  ?>
