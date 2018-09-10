@@ -21,10 +21,20 @@ echo $root;
 //$lista = Usuario::search("jo");
 
 // login
+//$usuario = new Usuario();
+//$usuario->login('Jose','123456789');
+//echo $usuario;
+
+// inserir usuario
+//$aluno = new Usuario("Renata","@senha");
+//$aluno->insert();
+
+
+//update
 $usuario = new Usuario();
-$usuario->login('Jose','123456789');
+
+$usuario->loadById(5);
+$usuario->update("Gabriela","A123ddd@");
 echo $usuario;
-
-
 
  ?>

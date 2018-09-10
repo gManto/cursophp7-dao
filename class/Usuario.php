@@ -41,6 +41,12 @@ Class Usuario{
   }
 
 
+  public function __construct($login = "", $password = ""){
+    $this->setDeslogin($login);
+    $this->setDesenha($password);
+  }
+
+
   public function __toString(){
 
     return json_encode(array(
@@ -101,16 +107,51 @@ Class Usuario{
 
       if(count($results) > 0){
          $row = $results[0];
-         $this->setIdusuario($row['idusuario']);
-         $this->setDeslogin($row['deslogin']);
-         $this->setDesenha($row['dessenha']);
-         $this->setDtcadastro(new DateTime($row['dtcadastro']));
+         $this->setData($row[0]);
       }else{
           throw new Exception("Login e/ou senha inválidos",1);
 
       }
 
   }
+
+
+  public function setData($data){
+
+    $this->setIdusuario($data['idusuario']);
+    $this->setDeslogin($data['deslogin']);
+    $this->setDesenha($data['dessenha']);
+    $this->setDtcadastro(new DateTime($data['dtcadastro']));
+
+  }
+
+  public function insert(){
+      $sql = new Sql();
+      $results = $sql->select("call sp_usuarios_insert(:LOGIN, :PASSWORD)", array(
+         ":LOGIN"=>$this->getDeslogin(),
+         ":PASSWORD"=>$this->getDesenha()
+      ));
+
+      if(count($results) > 0){
+        $this->setData($results[0]);
+      }
+    }
+
+
+    public function update($login, $password){
+
+      $this->setDeslogin($login);
+      $this->setDesenha($password);
+
+      $sql = new Sql();
+
+      $sql->query("update tb_usuarios set deslogin = :LOGIN , dessenha = :PASSWORD where idusuario = :ID", array(
+           ":LOGIN"=>$this->getDeslogin(),
+           ":PASSWORD"=>$this->getDesenha(),
+           ":ID"=>$this->getIdusuario()
+        ));
+      }
+
 
 }
 
